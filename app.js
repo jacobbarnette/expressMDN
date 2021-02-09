@@ -9,6 +9,12 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+//setup mongoose
+var mongoose = require('mongoose');
+//var mongoDB = 'mongodb+srv://jbarnette:worldofwarcraft@cluster0.fbh0r.mongodb.net/local_library?retryWrites=true&w=majority';
+mongoose.connect(mongodb+srv://clusterAnything.mongodb.net/test?retryWrites=true&w=majority, { user: process.env.MONGO_USER, pass: process.env.MONGO_PASSWORD, useNewUrlParser: true, useUnifiedTopology: true })
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -21,6 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
