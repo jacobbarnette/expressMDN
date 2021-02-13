@@ -6,13 +6,14 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var catalogRouter = require('./routes/cataolog');
 
 var app = express();
 
 //setup mongoose
 var mongoose = require('mongoose');
-//var mongoDB = 'mongodb+srv://jbarnette:worldofwarcraft@cluster0.fbh0r.mongodb.net/local_library?retryWrites=true&w=majority';
-mongoose.connect(mongodb+srv://clusterAnything.mongodb.net/test?retryWrites=true&w=majority, { user: process.env.MONGO_USER, pass: process.env.MONGO_PASSWORD, useNewUrlParser: true, useUnifiedTopology: true })
+var mongoDB = 'mongodb+srv://jbarnette:worldofwarcraft@cluster0.fbh0r.mongodb.net/local_library?retryWrites=true&w=majority';
+mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // view engine setup
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/catalog', catalogRouter);
 
 
 
